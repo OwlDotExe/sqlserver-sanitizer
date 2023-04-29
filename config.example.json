@@ -1,20 +1,15 @@
 {
-    // "configuration": [
+    "projects": [
     //     {
-    //         "instance_name": // Instance name used in SQL Server
-    //         "database_name": //
+    //         "instance_name": // Instance name used when launching SQL Server.
+    //         "database_name": // Database name that contains all the data in SQL Server.
     //         "credentials": [
     //             {
-    //                 "environment": "local",
-    //                 "username": "sa",
-    //                 "password": "aaaaaa"
-    //             },
-    //             {
-    //                 "environment": "beta",
-    //                 "username": "sa",
-    //                 "password": "123456789"
+    //                 "environment": // Environment where the script is runned (local, beta, prod)
+    //                 "username": // Username of the account used for requesting in SQL Server.
+    //                 "password": // Password of the account used for requesting in SQL Server.
     //             }
     //         ]
     //     },
-    // ]
+    ]
 }

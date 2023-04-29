@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx rimraf ./dist/ && npx tsc && node ./dist/index.js",
-    "test": "npm run dev assurance automobile crm"
+    "dev": "npx rimraf ./dist/ && npx tsc && node ./dist/index.js local",
+    "test": "npm run dev local assurance automobile crm"
   },
   "keywords": [],
   "author": "owl",
