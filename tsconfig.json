@@ -1,21 +1,18 @@
 {
   "compilerOptions": {
-    "compilerOptions": {
-      "module": "commonjs",
-      "noImplicitAny": true,
-      "target": "es6",
-      "baseUrl": "./",
-      "rootDir": "./",
-      "outDir": "dist/",
-      "removeComments": true,
-      "lib": ["es6", "dom", "es2017"],
-      "preserveConstEnums": true,
-    },
-    "include": [
-      "./src/**"
-    ],
-    "exclude": [
-      "./dist/**",
-    ]
-  }
+    "module": "CommonJS",
+    "noImplicitAny": true,
+    "target": "ES6",
+    "outDir": "dist",
+    "removeComments": true,
+    "lib": ["ES6", "dom", "es2017"],
+    "preserveConstEnums": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "./src/"
+  ],
+  "exclude": [
+    "./dist/",
+  ]
 }

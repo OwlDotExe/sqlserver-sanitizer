@@ -1,0 +1,20 @@
+{
+    // "configuration": [
+    //     {
+    //         "instance_name": // Instance name used in SQL Server
+    //         "database_name": //
+    //         "credentials": [
+    //             {
+    //                 "environment": "local",
+    //                 "username": "sa",
+    //                 "password": "aaaaaa"
+    //             },
+    //             {
+    //                 "environment": "beta",
+    //                 "username": "sa",
+    //                 "password": "123456789"
+    //             }
+    //         ]
+    //     },
+    // ]
+}

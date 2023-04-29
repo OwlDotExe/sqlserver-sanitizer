@@ -3,11 +3,20 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "dev": "npx rimraf ./dist/ && npx tsc && node ./dist/index.js",
+    "test": "npm run dev assurance automobile crm"
+  },
   "keywords": [],
   "author": "owl",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^18.16.2",
     "typescript": "^5.0.4"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "moment": "^2.29.4"
   }
 }
