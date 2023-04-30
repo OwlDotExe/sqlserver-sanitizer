@@ -14,3 +14,6 @@ export const error_config_empty: string = "An error occured... Configuration doe
 
 export const error_environment: string = "An error occured... Environment passed as an argument is not valid, please make sure that your environment is in the given list : local, beta.";
 export const error_name: string = "An error occured... One of the name passed as parameters does not match any project of the configuration file.";
+
+export const error_project_check: string = "An error occured... One of the project is missing some properties, please make sure that you fill all the properties needed for each project in the configuration file.";
+export const error_credential_check: string = "An error occured... One of the credentials is missing some properties, please make sure that you fill all the properties needed for each credential in the configuration file.";

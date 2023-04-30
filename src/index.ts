@@ -23,3 +23,6 @@ const names: string[] = parameters.length > 1 ? parameters.slice(1).map(name => 
 
 // ***** Initial check of command arguments ***** //
 ConstraintHelper.checkParameters(environment, names, config);
+
+// ***** Initial check of configuration file content ***** //
+ConstraintHelper.checkConfiguration(config);
