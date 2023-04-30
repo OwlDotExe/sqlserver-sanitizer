@@ -21,6 +21,9 @@ const environment: string = parameters[0].toLocaleLowerCase();
 const names: string[] = parameters.length > 1 ? parameters.slice(1).map(name => { return name.toLocaleLowerCase(); })
                                               : config.projects.map(project => { return project.name.toLocaleLowerCase(); });
 
+// ***** Filtering projects to only keep the project that has to be treated ***** //
+config.projects = config.projects.filter(project => names.includes(project.name))
+
 // ***** Initial check of command arguments ***** //
 ConstraintHelper.checkParameters(environment, names, config);
 

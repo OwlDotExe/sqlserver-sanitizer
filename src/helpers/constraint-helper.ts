@@ -1,4 +1,4 @@
-import { error_credential_check, error_environment, error_name, error_project_check } from "../constants/error-constant.js";
+import { error_credential_check, error_credential_empty, error_environment, error_name, error_project_check, error_project_empty } from "../constants/error-constant.js";
 import { error, success } from "../constants/status-constant.js";
 import { success_config_check, success_param } from "../constants/sucess-constant.js";
 import { Environment } from "../enums/environment.js";
@@ -28,6 +28,8 @@ export class ConstraintHelper {
         var index: number = keys.findIndex(key => key == environment);
 
         if (index == -1) LoggerHelper.log(error_environment, error);
+
+        if (config.projects.length == 0) LoggerHelper.log(error_project_empty, error);
 
         names.forEach(name => {
 
@@ -61,6 +63,8 @@ export class ConstraintHelper {
         config.projects.forEach(project => {
 
             if (!this.checkProjectProperties(project)) LoggerHelper.log(error_project_check, error);
+
+            if (project.credentials.length == 0) LoggerHelper.log(error_credential_empty, error);
 
             project.credentials.forEach(credential => {
 
