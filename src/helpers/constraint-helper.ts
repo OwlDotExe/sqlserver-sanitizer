@@ -92,6 +92,11 @@ export class ConstraintHelper {
 
         if (project.paths.length == 0) isValid = false;
 
+        project.paths.forEach(path => {
+
+            if (path == "") isValid = false;
+        })
+
         return isValid;
     }
 

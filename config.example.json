@@ -1,18 +1,18 @@
 {
-    // "projects": [
-    //     {
-    //         "instance_name": // Instance name used when launching SQL Server.
-    //         "database_name": // Database name that contains all the data in SQL Server.
-    //         "path": [
-    //          // Path of scripts file used to init the database.
-    //         ]
-    //         "credentials": [
-    //             {
-    //                 "environment": // Environment where the script is runned (local, beta, prod)
-    //                 "username": // Username of the account used for requesting in SQL Server.
-    //                 "password": // Password of the account used for requesting in SQL Server.
-    //             } [...]
-    //         ]
-    //     },
-    // ]
+    "projects": [
+        {
+            "instance_name": "", // Instance name used when launching SQL Server.
+            "database_name": "", // Database name that contains all the data in SQL Server.
+            "path": [
+             "" // Path of scripts files used to init the database. 
+            ],
+            "credentials": [
+                {
+                    "environment": "", // Environment where the script is runned (local, beta, prod)
+                    "username": "", // Username of the account used for requesting in SQL Server.
+                    "password": "" // Password of the account used for requesting in SQL Server.
+                }
+            ]
+        }
+    ]
 }

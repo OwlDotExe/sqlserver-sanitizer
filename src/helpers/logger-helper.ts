@@ -13,22 +13,22 @@ export class LoggerHelper {
     /**
      * @field   Color of a success message.
      */
-    private static success_color: Chalk = chalk.hex('#55efc4');
+    private static success_color: Chalk = chalk.hex("#55efc4");
 
     /**
      * @field   Color of an error message.
      */
-    private static error_color: Chalk = chalk.hex('#ff7675');
+    private static error_color: Chalk = chalk.hex("#ff7675");
 
     /**
      * @field   Color of time part of the message.
      */
-    private static locality_color: Chalk = chalk.hex('#ffeaa7');
+    private static locality_color: Chalk = chalk.hex("#ffeaa7");
 
     /**
      * @field   Color of the prefix part of the message.
      */
-    private static prefix_color: Chalk = chalk.hex('#636e72');
+    private static prefix_color: Chalk = chalk.hex("#636e72");
 
     /**
      * @method
@@ -60,7 +60,7 @@ export class LoggerHelper {
      */
     private static write(message: string, chalk_instance: Chalk, status: string) : void {
 
-        console.log(`${this.prefix_color('[System information]')} - ${this.locality_color(moment().format('DD/MM/YYYY HH:mm:SS'))} - ${chalk_instance(status)}`);
-        console.log(`${this.prefix_color('[System message]')} - ${message}\n`);
+        console.log(`${this.prefix_color("[System information]")} - ${this.locality_color(moment().format("DD/MM/YYYY HH:mm:SS"))} - ${chalk_instance(status)}`);
+        console.log(`${this.prefix_color("[System message]")} - ${message}\n`);
     }
 }

@@ -1,10 +1,10 @@
-import * as fs from 'fs';
+import * as fs from "fs";
+import { Configuration, IConfiguration } from "../models/configuration.js";
+import { LoggerHelper } from "./logger-helper.js";
+import { sucess_config_read } from "../constants/sucess-constant.js";
+import { error, success } from "../constants/status-constant.js";
+import { error_config_empty, error_config_read } from "../constants/error-constant.js";
 
-import { LoggerHelper } from './logger-helper.js';
-import { error, success } from '../constants/status-constant.js';
-import { error_config_empty, error_config_read } from '../constants/error-constant.js';
-import { Configuration, IConfiguration } from '../models/configuration.js';
-import { sucess_config_read } from '../constants/sucess-constant.js';
 
 /**
  * @class
@@ -22,7 +22,6 @@ export class FileHelper {
     public static readConfigurationFile(path: string, encoding?: BufferEncoding) : Configuration {
 
         try {
-
             const config: Configuration = new Configuration(<IConfiguration>JSON.parse(fs.readFileSync(path, encoding)));
 
             LoggerHelper.log(sucess_config_read, success);
@@ -32,7 +31,6 @@ export class FileHelper {
             return config;
         }
         catch(err) {
-
             LoggerHelper.log(error_config_read, error);
         }
     }
