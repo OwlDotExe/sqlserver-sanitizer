@@ -7,6 +7,8 @@ import { LoggerHelper } from "../helpers/logger-helper.js";
 import { Credential } from "../models/credential.js";
 import { Project } from "../models/project.js";
 import chalk, { Chalk } from "chalk";
+import { success_database_retrieval } from "../constants/sucess-constant.js";
+import { FileHelper } from "../helpers/file-helper.js";
 
 const accentuated: Chalk = chalk.bold;
 
@@ -59,12 +61,7 @@ export async function clearDatabase(project: Project, instance: DatabaseHelper) 
 
     await connectSQLServer(project, instance);
 
-    const data: IResult<any> = await checkDatabaseExistence(project, instance);
-
-    if (data.recordset.length > 0)
-    {
-        await deleteDatabase(project, instance);
-    }
+    await deleteDatabase(project, instance);
 
     await exitSQLServer(project, instance);
 }
@@ -115,9 +112,17 @@ export async function exitSQLServer(project: Project, instance: DatabaseHelper) 
 export async function checkDatabaseExistence(project: Project, instance: DatabaseHelper) : Promise<IResult<any>> {
 
     try {
+        await connectSQLServer(project, instance);
+
         const query: string = `SELECT database_id FROM sys.databases WHERE name = '${project.database_name}'`;
 
-        return await instance.executeQuery(query);
+        LoggerHelper.log(success_database_retrieval, success);
+
+        const data: IResult<any> = await instance.executeQuery(query);
+
+        await exitSQLServer(project, instance);
+
+        return data;
     }
     catch (err) {
         LoggerHelper.log(error_database_retrieval, error);
@@ -143,4 +148,57 @@ export async function deleteDatabase(project: Project, instance: DatabaseHelper)
     catch (err) {
         LoggerHelper.log(`An error occured... The database ${accentuated(project.database_name)} hasn't been deleted.`, error);
     }
+}
+
+/**
+ * @function
+ * @description             Function that creates a new database.
+ * @param                   project => The project that has to be build again.
+ * @param                   instance => Database instance that can be used for executing queries.
+ */
+export async function createDatabase(project: Project, instance: DatabaseHelper) : Promise<void> {
+
+    await connectSQLServer(project, instance);
+
+    try {
+        const query: string = `CREATE DATABASE ${project.database_name}`;
+
+        await instance.executeQuery(query);
+
+        LoggerHelper.log(`The creation of the database ${project.database_name} has been done successfully.`, success);
+    }
+    catch (err) {
+        LoggerHelper.log(`An error occured... The creation of the database ${accentuated(project.database_name)} has failed.`, error);
+    }
+
+    await exitSQLServer(project, instance);
+} 
+
+/**
+ * @function
+ * @description             Function that build a given database.
+ * @param                   project => 
+ * @param instance 
+ */
+export async function buildDatabase(project: Project, instance: DatabaseHelper) : Promise<void> {
+
+    await connectSQLServer(project, instance);
+
+    for (const path of project.paths) {
+
+        const fileName: string = path.split("\\").pop();
+
+        const script_content: string = FileHelper.readScriptFile(path, fileName, "utf8");
+
+        try {
+            await instance.executeQuery(script_content);
+
+            LoggerHelper.log(`The SQL Script ${accentuated(fileName)} has been executed successfully on the instance ${accentuated(project.instance_name)}`, success);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    await exitSQLServer(project, instance);
 }

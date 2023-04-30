@@ -7,8 +7,9 @@
 import { error_empty_param, error } from "./constants";
 import { FileHelper, LoggerHelper, ConstraintHelper } from "./helpers";
 import { Configuration, Credential, Project } from "./models";
-import { clearDatabase, getCredential, getDatabaseInstance } from "./utils/query-function.js";
+import { buildDatabase, checkDatabaseExistence, clearDatabase, createDatabase, getCredential, getDatabaseInstance } from "./utils/query-function.js";
 import { DatabaseHelper } from "./helpers/database-helper.js";
+import { IResult } from "mssql";
 
 main();
 
@@ -20,7 +21,7 @@ async function main() {
     if (parameters.length == 0) LoggerHelper.log(error_empty_param, error);
 
     // ***** Read of the configuration file ***** //
-    const config: Configuration = FileHelper.readConfigurationFile('./config.json', 'utf-8');
+    const config: Configuration = await FileHelper.readConfigurationFile('./config.json', 'utf8');
 
     // ***** Object destructuring of parameters to extract environment & project names ***** //
     const environment: string = parameters[0].toLocaleLowerCase();
@@ -43,8 +44,22 @@ async function main() {
         const credential: Credential = await getCredential(project, environment);
             
         // ***** Get database instance for executing deletion of database if needed ***** //
-        const instance: DatabaseHelper = await getDatabaseInstance(project, credential, "master");
+        const neutral_instance: DatabaseHelper = await getDatabaseInstance(project, credential, "master");
 
-        await clearDatabase(project, instance);
+        const data: IResult<any> = await checkDatabaseExistence(project, neutral_instance);
+
+        // ***** Clear everything in order to have a blank SQL Server for the next step ***** //
+        if (data.recordset.length > 0)
+        {
+            await clearDatabase(project, neutral_instance);
+        }
+
+        // ***** Creation of the database in order to execute all the script ***** //
+        await createDatabase(project, neutral_instance);
+
+        const project_instance: DatabaseHelper = await getDatabaseInstance(project, credential);
+
+        // ***** Execution of all the scripts in order to have a fresh and usable database ***** //
+        await buildDatabase(project, project_instance);
     }
 }
